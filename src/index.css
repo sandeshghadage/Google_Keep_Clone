@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #202124;
+  color: #e8eaed;
+}
+
+body,
+html {
+  font-family: Roboto, arial, sans-serif;
+}
