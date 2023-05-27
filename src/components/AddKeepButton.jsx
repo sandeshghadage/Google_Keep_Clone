@@ -12,7 +12,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function AddKeepButton() {
+export default function AddKeepButton({ onClick }) {
   const classes = useStyles();
   return (
     <Stack sx={{ width: "36rem", height: "3rem" }}>
@@ -31,7 +31,18 @@ export default function AddKeepButton() {
         }}
         elevation={5}
       >
-        <div>Take a note...</div>
+        <div
+          onClick={onClick}
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            color: "#b5babc",
+          }}
+        >
+          Take a note...
+        </div>
         <Stack direction={"row"} alignItems={"center"} gap={4}>
           <CheckBoxOutlinedIcon className={classes.iconStyle} />
           <BrushOutlinedIcon className={classes.iconStyle} />

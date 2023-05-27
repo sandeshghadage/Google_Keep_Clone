@@ -1,5 +1,5 @@
 import { Box, Stack } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import LightbulbOutlinedIcon from "@mui/icons-material/LightbulbOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -7,17 +7,17 @@ import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddKeepButton from "../components/AddKeepButton";
+import KeepInputField from "../components/KeepInputField";
+import KeepItem from "../components/KeepItem";
+import {
+  deleteKeep,
+  getAllKeeps,
+  saveKeep,
+  updateKeep,
+} from "../utils/Network";
+import KeepUpdateDialog from "../components/KeepUpdateDialog";
 
 const useStyles = makeStyles({
-  // customTextField: {
-  //   height: "3rem",
-  //   "& .MuiOutlinedInput-root": {
-  //     height: "100%",
-  //   },
-  //   backgroundColor: "#525355",
-  //   width: "45rem",
-  //   borderRadius: "8px",
-  // },
   iconStyle: {
     color: "#8f8f91",
     cursor: "pointer",
@@ -26,9 +26,47 @@ const useStyles = makeStyles({
 });
 
 export default function Home() {
+  const [allKeeps, setAllKeeps] = useState([]);
+  const [createKeep, setCreateKeep] = useState(false);
+  const [text, setText] = useState("");
+  const [title, setTitle] = useState("");
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [currUpdateId, setCurrUpdateId] = useState(null);
   const classes = useStyles();
+
+  useEffect(() => {
+    getAllKeeps(setAllKeeps);
+  }, []);
+
+  function handleCreateKeep() {
+    setCreateKeep(false);
+    if (title !== "" || text !== "") {
+      saveKeep(title, text, setAllKeeps);
+      setText("");
+      setTitle("");
+    }
+  }
+
+  function handleDelete(_id, e) {
+    e.stopPropagation();
+    deleteKeep(_id, setAllKeeps);
+  }
+
+  function handleUpdate() {
+    updateKeep(title, text, setAllKeeps, currUpdateId);
+    setIsUpdate(false);
+  }
+
+  function handleUpdateDialog(item) {
+    setIsUpdate(true);
+    setText(item.text);
+    setTitle(item.title);
+    setCurrUpdateId(item._id);
+  }
+
   return (
     <Box sx={{ display: "flex" }}>
+      {/* vertical sidebar */}
       <Stack
         direction={"column"}
         // position={"fixed"}
@@ -44,6 +82,7 @@ export default function Home() {
         <ArchiveOutlinedIcon className={classes.iconStyle} />
         <DeleteOutlineOutlinedIcon className={classes.iconStyle} />
       </Stack>
+      {/* main home area */}
       <Box
         sx={{
           display: "flex",
@@ -53,7 +92,49 @@ export default function Home() {
           marginTop: "2rem",
         }}
       >
-        <AddKeepButton />
+        <div style={{ width: "auto" }}>
+          {createKeep ? (
+            <KeepInputField
+              onClick={handleCreateKeep}
+              setText={setText}
+              setTitle={setTitle}
+            />
+          ) : (
+            <AddKeepButton onClick={() => setCreateKeep(true)} />
+          )}
+        </div>
+        <KeepUpdateDialog
+          handleDialog={isUpdate}
+          text={text}
+          title={title}
+          setTitle={setTitle}
+          setText={setText}
+          handleEdit={handleUpdate}
+        />
+        {/* notes area */}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "start",
+            width: "90%",
+            marginTop: "4rem",
+            // border: "2px solid",
+            // height: "80%",
+            gap: "1rem",
+          }}
+        >
+          {allKeeps.data?.map((item) => (
+            <KeepItem
+              key={item._id}
+              title={item.title}
+              text={item.text}
+              handleDelete={(e) => handleDelete(item._id, e)}
+              // handleUpdate={() => handleUpdate(item)}
+              handleDialog={() => handleUpdateDialog(item)}
+            />
+          ))}
+        </Box>
       </Box>
     </Box>
   );

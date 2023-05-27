@@ -1,18 +1,22 @@
 import React from "react";
-import { Box, Stack, TextField } from "@mui/material";
+import { Box, InputAdornment, Stack, TextField } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { makeStyles } from "@mui/styles";
 import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
-// import ViewStreamOutlinedIcon from "@mui/icons-material/ViewStreamOutlined";
 import ViewAgendaOutlinedIcon from "@mui/icons-material/ViewAgendaOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 const useStyles = makeStyles({
   customTextField: {
     height: "3rem",
     "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        border: "none",
+      },
       height: "100%",
+      color: "#fff",
     },
     backgroundColor: "#525355",
     width: "45rem",
@@ -47,7 +51,15 @@ export default function Header() {
         </div>
         <div style={{ fontSize: "24px" }}>Keep</div>
         <TextField
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchOutlinedIcon sx={{ color: "#969697", mr: 1 }} />
+              </InputAdornment>
+            ),
+          }}
           className={classes.customTextField}
+          placeholder="Search"
           sx={{ marginLeft: "4rem" }}
         />
       </Stack>
