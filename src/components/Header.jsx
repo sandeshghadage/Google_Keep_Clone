@@ -25,6 +25,12 @@ const useStyles = makeStyles({
   iconStyle: {
     color: "#8f8f91",
     cursor: "pointer",
+    padding: "10px",
+    borderRadius: "50%",
+    "&:hover": {
+      backgroundColor: "#494949",
+      color: "white",
+    },
   },
 });
 

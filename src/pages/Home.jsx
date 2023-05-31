@@ -16,12 +16,21 @@ import {
   updateKeep,
 } from "../utils/Network";
 import KeepUpdateDialog from "../components/KeepUpdateDialog";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../Firebase";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   iconStyle: {
     color: "#8f8f91",
     cursor: "pointer",
     fontSize: "25px",
+    padding: "10px",
+    borderRadius: "50%",
+    "&:hover": {
+      backgroundColor: "#41331c",
+      color: "white",
+    },
   },
 });
 
@@ -33,6 +42,23 @@ export default function Home() {
   const [isUpdate, setIsUpdate] = useState(false);
   const [currUpdateId, setCurrUpdateId] = useState(null);
   const classes = useStyles();
+  const Navigate = useNavigate();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        // ...
+        console.log("uid", uid);
+      } else {
+        // User is signed out
+        // ...
+        console.log("user is logged out");
+      }
+    });
+  }, []);
 
   useEffect(() => {
     getAllKeeps(setAllKeeps);
@@ -69,14 +95,16 @@ export default function Home() {
       {/* vertical sidebar */}
       <Stack
         direction={"column"}
-        // position={"fixed"}
         width={"4.5rem"}
         height={"100vh"}
         alignItems={"center"}
-        gap={3}
+        gap={0.5}
         paddingTop={"1.2rem"}
       >
-        <LightbulbOutlinedIcon className={classes.iconStyle} />
+        <LightbulbOutlinedIcon
+          className={classes.iconStyle}
+          onClick={() => Navigate("/")}
+        />
         <NotificationsOutlinedIcon className={classes.iconStyle} />
         <CreateOutlinedIcon className={classes.iconStyle} />
         <ArchiveOutlinedIcon className={classes.iconStyle} />
@@ -111,7 +139,7 @@ export default function Home() {
           setText={setText}
           handleEdit={handleUpdate}
         />
-        {/* notes area */}
+        {/* Keep area */}
         <Box
           sx={{
             display: "flex",
@@ -119,8 +147,6 @@ export default function Home() {
             alignItems: "start",
             width: "90%",
             marginTop: "4rem",
-            // border: "2px solid",
-            // height: "80%",
             gap: "1rem",
           }}
         >
@@ -130,7 +156,6 @@ export default function Home() {
               title={item.title}
               text={item.text}
               handleDelete={(e) => handleDelete(item._id, e)}
-              // handleUpdate={() => handleUpdate(item)}
               handleDialog={() => handleUpdateDialog(item)}
             />
           ))}

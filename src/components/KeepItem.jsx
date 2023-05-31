@@ -1,5 +1,5 @@
 import { Paper, Stack } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
 import AddAlertOutlinedIcon from "@mui/icons-material/AddAlertOutlined";
@@ -16,26 +16,32 @@ const useStyles = makeStyles({
   },
 });
 
-export default function KeepItem({
-  text,
-  title,
-  handleDelete,
-  // handleUpdate,
-  handleDialog,
-}) {
+export default function KeepItem({ text, title, handleDelete, handleDialog }) {
+  const [isVisible, setisVisible] = useState(false);
   const classes = useStyles();
+
+  const handleMouseEnter = () => {
+    setisVisible(true);
+  };
+  const handleMouseLeave = () => {
+    setisVisible(false);
+  };
   return (
     <Stack
       onClick={handleDialog}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       sx={{
         display: "flex",
         flexDirection: "column",
         width: "16rem",
+        minHeight: "125px",
       }}
     >
       <Paper
         sx={{
           width: "100%",
+          minHeight: "125px",
           backgroundColor: "#202124",
           border: "1px solid #4b4e53",
           borderRadius: "8px",
@@ -64,39 +70,42 @@ export default function KeepItem({
               color: "#d6e4e6",
               padding: "0",
               margin: "1rem 0rem",
+              wordWrap: "break-word",
             }}
           >
             {text}
           </div>
-          <Stack direction={"row"} justifyContent={"space-between"}>
-            <Stack direction={"row"} gap={3}>
-              <AddAlertOutlinedIcon
-                sx={{ fontSize: "18px" }}
-                className={classes.iconStyle}
-              />
-              <PersonAddAltOutlinedIcon
-                sx={{ fontSize: "18px" }}
-                className={classes.iconStyle}
-              />
-              <ColorLensOutlinedIcon
-                sx={{ fontSize: "18px" }}
-                className={classes.iconStyle}
-              />
-              <InsertPhotoOutlinedIcon
-                sx={{ fontSize: "18px" }}
-                className={classes.iconStyle}
-              />
-              <ArchiveOutlinedIcon
-                sx={{ fontSize: "18px" }}
-                className={classes.iconStyle}
-              />
-              <MoreVertOutlinedIcon
-                onClick={handleDelete}
-                sx={{ fontSize: "18px" }}
-                className={classes.iconStyle}
-              />
+          {isVisible && (
+            <Stack direction={"row"} justifyContent={"space-between"}>
+              <Stack direction={"row"} gap={3}>
+                <AddAlertOutlinedIcon
+                  sx={{ fontSize: "18px" }}
+                  className={classes.iconStyle}
+                />
+                <PersonAddAltOutlinedIcon
+                  sx={{ fontSize: "18px" }}
+                  className={classes.iconStyle}
+                />
+                <ColorLensOutlinedIcon
+                  sx={{ fontSize: "18px" }}
+                  className={classes.iconStyle}
+                />
+                <InsertPhotoOutlinedIcon
+                  sx={{ fontSize: "18px" }}
+                  className={classes.iconStyle}
+                />
+                <ArchiveOutlinedIcon
+                  sx={{ fontSize: "18px" }}
+                  className={classes.iconStyle}
+                />
+                <MoreVertOutlinedIcon
+                  onClick={handleDelete}
+                  sx={{ fontSize: "18px" }}
+                  className={classes.iconStyle}
+                />
+              </Stack>
             </Stack>
-          </Stack>
+          )}
         </Stack>
       </Paper>
     </Stack>

@@ -18,7 +18,6 @@ export function saveKeep(title, text, setAllKeeps) {
 }
 
 export function updateKeep(title, text, setAllKeeps, _id) {
-  //   const title = title || text;
   axios.post(`${baseUrl}/update`, { _id, title, text }).then((data) => {
     console.log(data);
     getAllKeeps(setAllKeeps);

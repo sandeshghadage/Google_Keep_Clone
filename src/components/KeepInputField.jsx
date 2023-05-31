@@ -27,7 +27,6 @@ const useStyles = makeStyles({
       width: "100%",
       height: "2rem",
       paddingLeft: "0px",
-      // margin: "1rem 0rem",
     },
   },
   customTextField: {
@@ -41,12 +40,18 @@ const useStyles = makeStyles({
       color: "#a3a5a7",
       width: "100%",
       padding: "0",
-      margin: "1rem 0rem",
+      margin: "0.5rem 0rem",
     },
   },
   iconStyle: {
     color: "#8f8f91",
     cursor: "pointer",
+    padding: "7px",
+    borderRadius: "50%",
+    "&:hover": {
+      backgroundColor: "#494949",
+      color: "white",
+    },
   },
 });
 
@@ -92,7 +97,7 @@ export default function KeepInputField({ onClick, setTitle, setText }) {
             multiline
           />
           <Stack direction={"row"} justifyContent={"space-between"}>
-            <Stack direction={"row"} gap={4}>
+            <Stack direction={"row"} gap={2}>
               <AddAlertOutlinedIcon
                 sx={{ fontSize: "18px" }}
                 className={classes.iconStyle}
@@ -127,7 +132,7 @@ export default function KeepInputField({ onClick, setTitle, setText }) {
               />
             </Stack>
             <Typography
-              sx={{ cursor: "pointer" }}
+              sx={{ cursor: "pointer", padding: "7px" }}
               color={"#a3a5a7"}
               onClick={onClick}
             >
@@ -139,5 +144,3 @@ export default function KeepInputField({ onClick, setTitle, setText }) {
     </Stack>
   );
 }
-
-//KeepInputField

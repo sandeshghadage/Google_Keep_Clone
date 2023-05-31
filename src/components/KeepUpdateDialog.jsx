@@ -1,11 +1,5 @@
 import { Dialog } from "@mui/material";
-import {
-  ClickAwayListener,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Stack, TextField, Typography } from "@mui/material";
 import React from "react";
 import { makeStyles } from "@mui/styles";
 import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
@@ -32,7 +26,7 @@ const useStyles = makeStyles({
   },
   customTextField: {
     "& .MuiInputBase-input": {
-      whiteSpace: "normal", // Allow text to wrap to new lines
+      whiteSpace: "normal",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
@@ -56,7 +50,6 @@ export default function KeepUpdateDialog({
   text,
   setTitle,
   title,
-  // handleUpdate,
   handleEdit,
 }) {
   const classes = useStyles();
