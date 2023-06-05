@@ -67,7 +67,6 @@ const Login = () => {
         >
           <TextField
             className={classes.customTextField}
-            // required
             placeholder="Email address"
             onChange={(e) => setEmail(e.target.value)}
           />
