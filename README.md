@@ -15,6 +15,7 @@ This project is a Google Keep clone built with React, MongoDB, express and Fireb
 
 - React: JavaScript library for building user interfaces
 - MongoDB: NoSQL database for storing notes
+- Express: Backend framework to manage all requests
 - Firebase Authentication: Provides user authentication services
 - Material-UI: UI component library for React
 - React Router: Library for handling routing in a React application
