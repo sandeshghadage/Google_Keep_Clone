@@ -1,6 +1,6 @@
 # Google Keep Clone
 
-This project is a Google Keep clone built with React, MongoDB, and Firebase for authentication. It allows users to create, update, and delete notes, as well as authenticate using Firebase authentication.
+This project is a Google Keep clone built with React, MongoDB, express and Firebase for authentication. It allows users to create, update, and delete notes, as well as authenticate using Firebase authentication.
 
 ## Features
 
