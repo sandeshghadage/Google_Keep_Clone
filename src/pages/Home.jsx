@@ -45,6 +45,10 @@ export default function Home() {
   const Navigate = useNavigate();
 
   useEffect(() => {
+    // console.log(window.innerWidth);
+    if (window.innerWidth < 760) {
+      window.alert("Open this app in desktop mode for better experience");
+    }
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
